@@ -14,7 +14,6 @@ public class EmployeeService {
 
     private final RestTemplate restTemplate;
 
-    // Base URL for the backend API
     @Value("${backend.api.url}")
     private String backendApiUrl;
 
@@ -22,7 +21,6 @@ public class EmployeeService {
         this.restTemplate = restTemplate;
     }
 
-    // Fetch all employees from the backend
     public List<EmployeeDTO> getEmployees() {
         String url = UriComponentsBuilder.fromHttpUrl(backendApiUrl)
                 .path("/api/v1/employees")
@@ -32,7 +30,6 @@ public class EmployeeService {
         return Arrays.asList(response);
     }
 
-    // Fetch employee by ID from the backend
     public EmployeeDTO getEmployeeById(Long id) {
         String url = UriComponentsBuilder.fromHttpUrl(backendApiUrl)
                 .path("/api/v1/employees/{id}")
@@ -42,7 +39,6 @@ public class EmployeeService {
         return restTemplate.getForObject(url, EmployeeDTO.class);
     }
 
-    // Add a new employee
     public EmployeeDTO addEmployee(EmployeeDTO employeeDTO) {
         String url = UriComponentsBuilder.fromHttpUrl(backendApiUrl)
                 .path("/api/v1/employees/add")
@@ -51,7 +47,6 @@ public class EmployeeService {
         return restTemplate.postForObject(url, employeeDTO, EmployeeDTO.class);
     }
 
-    // Update an existing employee
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
         String url = UriComponentsBuilder.fromHttpUrl(backendApiUrl)
                 .path("/api/v1/employees/update")
@@ -61,7 +56,6 @@ public class EmployeeService {
         return employeeDTO;
     }
 
-    // Delete an employee by ID
     public boolean deleteEmployee(Long id) {
         String url = UriComponentsBuilder.fromHttpUrl(backendApiUrl)
                 .path("/api/v1/employees/delete/{id}")

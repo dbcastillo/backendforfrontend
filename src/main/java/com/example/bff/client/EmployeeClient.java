@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +22,6 @@ public class EmployeeClient {
         this.backendApiUrl = backendApiUrl;
     }
 
-    // Get all employees
     public List<EmployeeDTO> getAllEmployees() {
         ResponseEntity<List> responseEntity = restTemplate.exchange(
                 backendApiUrl + "/api/v1/employees",
@@ -34,7 +32,6 @@ public class EmployeeClient {
         return responseEntity.getBody();
     }
 
-    // Get employee by ID
     public EmployeeDTO getEmployeeById(Long id) {
         ResponseEntity<EmployeeDTO> responseEntity = restTemplate.exchange(
                 backendApiUrl + "/api/v1/employees/" + id,
@@ -45,11 +42,8 @@ public class EmployeeClient {
         return responseEntity.getBody();
     }
 
-    // Create a new employee
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
         HttpEntity<EmployeeDTO> requestEntity = new HttpEntity<>(employeeDTO, headers);
         ResponseEntity<EmployeeDTO> responseEntity = restTemplate.exchange(
                 backendApiUrl + "/api/v1/employees/add",
@@ -60,7 +54,6 @@ public class EmployeeClient {
         return responseEntity.getBody();
     }
 
-    // Update an existing employee
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
         HttpEntity<EmployeeDTO> requestEntity = new HttpEntity<>(employeeDTO);
         ResponseEntity<EmployeeDTO> responseEntity = restTemplate.exchange(
@@ -72,7 +65,6 @@ public class EmployeeClient {
         return responseEntity.getBody();
     }
 
-    // Delete an employee by ID
     public void deleteEmployee(Long id) {
         restTemplate.exchange(
                 backendApiUrl + "/api/v1/employees/delete/" + id,
